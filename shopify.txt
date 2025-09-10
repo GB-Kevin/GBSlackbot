@@ -1,0 +1,121 @@
+SHOPIFY
+What does the Klaviyo–Shopify integration do?
+The Klaviyo–Shopify integration connects your Shopify store with Klaviyo, syncing customer, product, and order data between the two platforms. 
+This allows you to use Shopify activity to trigger personalised flows, build advanced customer segments, and send targeted campaigns. The integration runs automatically once set up, ensuring data flows in real time without the need for manual uploads.
+What data is shared from Shopify to Klaviyo?
+When integrated, Shopify passes a wide range of customer and order data into Klaviyo, including:
+Customer profiles (email, phone, location, tags, etc.)
+Placed orders, cancelled orders, and fulfilled orders
+Checkout started (abandoned checkout events)
+Product catalogue (title, image, URL, price, collections)
+Fulfilment and refund data
+ - This gives you a complete view of each customer’s purchase history and behaviour.
+
+How does the product catalogue sync work?
+The Shopify catalogue sync ensures all products and collections are available within Klaviyo. This is critical for flows such as Abandoned Cart or Browse Abandonment, where dynamic product blocks in emails need to display the correct product image, name, and link. The catalogue updates automatically as new products are added or updated in Shopify.
+Which Klaviyo flows benefit most from the Shopify integration?
+Several key flows are powered directly by Shopify events:
+Abandoned Checkout Flow – Reminds customers who started checkout but didn’t complete their order.
+
+Browse Abandonment Flow – Follows up with shoppers who viewed products but didn’t add them to cart.
+
+Abandoned Cart Flow – Targets customers who added items to cart but didn’t checkout.
+
+Post-Purchase Flow – Thanks customers after purchase, often cross-selling or requesting reviews.
+
+Fulfilment/Shipping Flow – Notifies customers when their order has shipped.
+
+Refund or Cancellation Flow – Sends confirmation when an order is cancelled or refunded.
+
+How does the integration improve campaigns?
+Shopify data can be used to build precise campaign segments. For example:
+Customers who purchased in the last 30 days
+Customers who purchased a specific product or collection
+Customers who have never purchased but signed up to the newsletter
+High-value customers based on total spend
+ This targeting ensures campaigns are personalised, reducing unsubscribes and boosting conversion rates.
+
+Can I build customer segments in Klaviyo using Shopify data?
+Yes, this is one of the key benefits. You can segment customers based on:
+Lifetime value (total revenue across all orders)
+Purchase frequency (number of orders placed)
+Time since last order
+Product or collection purchased
+Customers with open or cancelled orders
+- Segments automatically update as new data comes in from Shopify.
+
+What are the requirements for setting up the Shopify integration?
+A Shopify store (admin access required)
+A Klaviyo account with integrations permissions
+Klaviyo needs to be installed via the Shopify App Store or by adding the integration through Klaviyo’s dashboard
+The correct tracking scripts installed for onsite tracking (including the Klaviyo.js script for browse data and signup forms)
+Once installed, the sync begins immediately, with initial historical data usually importing within 24–48 hours.
+How does onsite tracking work with Shopify and Klaviyo?
+The integration automatically adds Klaviyo’s onsite tracking script to your Shopify theme. This script collects browse data (e.g. product viewed, site searched, cart updated) and ties it back to customer profiles when possible. This is how flows like Browse Abandonment and Abandoned Cart are triggered.
+What are some best practices for using the Shopify integration?
+Start with core flows: Abandoned Checkout, Abandoned Cart, and Post-Purchase are essential.
+
+Use dynamic product blocks in emails so customers see the exact items they viewed or abandoned.
+
+Set up engaged/unengaged segments based on Shopify purchase behaviour to improve deliverability.
+
+Leverage predictive analytics: Klaviyo can calculate expected next order date and customer lifetime value using Shopify data.
+
+Combine Shopify data with other integrations (e.g. reviews, loyalty, or subscriptions) for richer segmentation.
+How do I connect a new Shopify store to our analytics tools?
+Ensure Google Analytics and Google Tag Manager are installed on the Shopify store via the "Online Store > Preferences" section.
+Verify data layer implementation for enhanced e-commerce tracking.
+What's the best practice for managing product feeds for Shopify?
+Utilise apps like Google Shopping Feed or third-party product feed management tools to optimize and maintain accurate product data for various marketing channels.
+How do I troubleshoot issues with Shopify checkout?
+Check the store's general settings for any recent changes to payment gateways or shipping zones.
+Review theme customizations for any JavaScript errors.
+Ensure all required checkout fields are configured correctly.
+
+How do I use the Shopify Catalog function in Klaviyo to pull dynamic content?
+To configure correctly take the template tag you wish to use take the template tag, add the event variant metric you wish you use (this can be from a trigger or from a person|lookup profile property) add the Catalog tag either side of the template tag. 
+Shopify Catalog tag 
+{% catalog replace_with_variant.id integration='shopify' %} {{ replace_with_template_tag }} {% endcatalog %}
+Example
+For Item Title:
+{% catalog event.variant_ids.0 integration='shopify' %} {{ catalog_item.title }} {% endcatalog %}
+
+Template tag
+Name
+Description
+{{ catalog_item.description }}
+Description
+The description of the item.
+{{ catalog_item.url }}
+URL
+The url for accessing the item in your store.
+{{ catalog_item.title }}
+Title
+The title of the item.
+{% currency_format catalog_item.metadata|lookup:"price" %}
+Price
+The price of an item. This tag formats the item price with the correct currency prefix.
+{{ catalog_item.featured_image.full.src }}
+Full image
+The url for the full image of the item. Use this inside of an image block, or an <img> tag.
+{{ catalog_item.featured_image.thumbnail.src }}
+Thumbnail
+The url for the full image of the item. Use this in an <img> tag in custom HTML, or use it as a dynamic image placeholder URL surrounded by the opening and closing {% catalog %} tags 
+{{ catalog_item.id }}
+ Id
+The Product ID of the item.
+{{ catalog_id }}
+Catalog ID
+The ID of the catalog so you can specify which catalog to pull from if you have multiple. 
+
+Where can I find information on Shopify app recommendations?
+Refer to the "Approved Shopify Apps" document in Google Drive, which lists vetted and recommended applications for various functionalities.
+Cross-Platform (Klaviyo & Shopify) Issues
+How do I ensure customer data syncs correctly between Shopify and Klaviyo?
+Verify the Klaviyo Shopify integration settings within your Klaviyo account, ensuring all necessary data sync options are enabled.
+Regularly check the "Integrations" section in Klaviyo for any sync errors or warnings.
+What's the process for segmenting customers based on their Shopify purchase history in Klaviyo?
+Utilise Klaviyo's segmentation tools to create segments based on metrics like "Placed Order," "Product Purchased," or "Total Spend," which pull data directly from Shopify.
+How do I set up abandoned cart flows using data from Shopify in Klaviyo?
+Ensure the "Started Checkout" event is flowing from Shopify to Klaviyo.
+Create a flow triggered by this event, incorporating delays and conditional splits to target different stages of the abandoned cart journey.
