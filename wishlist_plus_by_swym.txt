@@ -1,0 +1,41 @@
+Wishlist Plus by Swym
+
+What is Wishlist Plus by Swym?
+Wishlist Plus is an app that allows shoppers to save products they like into a wishlist on your Shopify (or other eCommerce) site. Unlike basic wishlists, Swym stores the data even if a customer is not logged in, enabling a seamless cross-device experience. When connected to Klaviyo, wishlist activity can trigger personalised flows and campaigns, driving customers back to complete their purchases.
+How does Wishlist Plus integrate with Klaviyo?
+The integration syncs customer wishlist activity directly to Klaviyo profiles. Events such as adding an item to a wishlist, removing an item, or purchasing an item from a wishlist are sent into Klaviyo. This allows brands to build automation and campaigns around wishlist engagement, similar to browse and cart abandonment strategies, but with an even stronger purchase intent signal.
+What type of data is shared from Wishlist Plus to Klaviyo?
+Wishlist Plus passes behavioural events and product data into Klaviyo, including:
+Product added to wishlist (with product name, image, and URL)
+Product removed from wishlist
+Product purchased from wishlist
+Customer wishlist size or last updated date
+- This data enriches customer profiles, giving you a clearer view of individual preferences and shopping intent.
+
+Which Klaviyo flows work best with wishlist data?
+Wishlist data is especially powerful in automated flows such as:
+Wishlist Add Flow – Triggers when someone saves an item to their wishlist, sending a follow-up reminder or highlighting low stock.
+Wishlist Reminder Flow – Reminds customers of items in their wishlist after a set period of inactivity.
+Wishlist Back-in-Stock Flow – Alerts customers when a wishlist item returns to stock.
+Wishlist Price Drop Flow – Notifies customers if a wishlist item goes on sale.
+Wishlist Purchase Flow – Thanks customers when they purchase an item from their wishlist, with an opportunity to cross-sell.
+How can wishlist data improve Klaviyo campaigns?
+Campaigns can be made more engaging by targeting customers based on their wishlist activity. For example:
+Send a campaign to all customers with items in their wishlist during a seasonal sale.
+Highlight trending or most-saved products in a broadcast email.
+Target high-intent customers who added items to their wishlist but haven’t purchased in 30+ days.
+ This ensures that campaigns feel personalised and are more likely to convert.
+
+Can I create segments in Klaviyo based on wishlist behaviour?
+Yes. You can build dynamic segments such as:
+Customers who have added items to their wishlist but haven’t purchased in the past 60 days.
+Customers who frequently update their wishlist (indicating high engagement).
+Customers who purchased an item from their wishlist in the last 30 days (ideal for post-purchase upsell campaigns).
+Customers with large wishlists (great for holiday or gifting campaigns).
+
+What are some best practices for using Wishlist Plus with Klaviyo?
+Treat wishlist events like abandoned carts: Customers who add items to a wishlist have shown strong intent; timely reminders can drive conversions.
+Incorporate urgency: Use low-stock and price-drop triggers to encourage action.
+Use dynamic product blocks: Show customers the exact wishlist items they saved in your emails.
+Incentivise wishlist shoppers: Offer a discount or free shipping reminder for wishlist-heavy customers.
+Cross-promote in campaigns: Highlight wishlist functionality in newsletters to encourage customers to save items, building more engagement data.
