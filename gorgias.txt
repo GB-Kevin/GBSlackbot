@@ -1,0 +1,16 @@
+Gorgias
+
+ What is Gorgias, and why should I connect it to Klaviyo?
+Gorgias is a helpdesk and customer support platform built for eCommerce. It centralises customer enquiries from email, live chat, social media, and SMS, giving support teams a single view of all conversations. 
+When integrated with Klaviyo, customer service data and interactions can be used to improve marketing segmentation and personalisation. This ensures that customers are communicated with in a way that reflects their support history and current relationship with the brand.
+How does the integration between Gorgias and Klaviyo work?
+Once connected, Gorgias sends key support data into Klaviyo. This includes information such as whether a customer has an open ticket, how recently they interacted with support, and the types of issues they’ve raised. 
+These details are stored as profile properties in Klaviyo and can be used to shape segmentation and automated flows. In the other direction, Klaviyo data can help support teams in Gorgias by giving them more context on a customer’s purchase and communication history.
+What problems does this integration solve for brands?
+One of the main challenges for eCommerce businesses is the disconnect between marketing and customer service. Without visibility of support activity, marketing teams may send promotional emails to customers who are currently waiting on a complaint to be resolved, which can harm trust and loyalty. 
+The integration solves this by making sure support status is factored into email and SMS communications, ensuring that messages are timely, relevant, and empathetic.
+
+What data from Gorgias is available in Klaviyo?
+Klaviyo can receive data such as ticket status (open, pending, solved), last ticket date, number of tickets created, and categories of issues raised. These properties provide valuable insight into a customer’s sentiment and overall relationship with the brand. They can then be used to trigger flows, create conditional splits, or build segments.
+Can I use Gorgias data to build segments and campaigns in Klaviyo?
+Yes. For example, you could build a segment of customers who have had more than three tickets raised in the past six months, or exclude all customers with unresolved tickets from a campaign. You could also target customers who previously raised a product-specific issue with reassurance or education content relating to that product. The flexibility of Klaviyo means Gorgias data can be applied in many creative ways.
