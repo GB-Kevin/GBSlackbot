@@ -1,0 +1,21 @@
+MAILCHIMP
+Why would we migrate from Mailchimp to Klaviyo?
+The main reason is capability. Mailchimp is primarily a newsletter tool, while Klaviyo is a full customer data and marketing automation platform. By migrating, you get a much deeper level of segmentation, personalisation, and automation. 
+Klaviyo also combines email, SMS, and onsite data in one place, so all customer communication comes out of a single platform. This not only saves billing costs but also makes it easier to run advanced campaigns without juggling multiple tools.
+How does Klaviyo compare to Mailchimp?
+Mailchimp is strong at simple campaign sends but limited when it comes to advanced flows and dynamic personalisation. Klaviyo, on the other hand, integrates directly with eCommerce platforms like Shopify, Magento, and WooCommerce. 
+This means you can automatically trigger emails based on actions such as browsing, adding to cart, starting checkout, or purchasing. In short: Mailchimp helps you send emails, Klaviyo helps you send the right email at the right time.
+Will migrating to Klaviyo save us money?
+Often yes, especially for eCommerce brands. With Mailchimp, you may end up paying for add-ons or third-party integrations to achieve functionality that is already built into Klaviyo. 
+By consolidating email, SMS, signup forms, and reporting in one place, you cut down on extra subscriptions and avoid paying for contacts twice across platforms. Suppression management is also easier in Klaviyo, meaning you don’t waste money sending to disengaged profiles.
+What happens to our existing lists and segments if we move?
+Your contacts can be exported from Mailchimp and imported into Klaviyo. When doing this, it’s important to bring across both active subscribers and suppressed (unsubscribed/bounced) profiles so that compliance is maintained. Segments in Mailchimp can usually be rebuilt in Klaviyo with even more precision, since Klaviyo has richer filters based on purchase history and onsite behaviour.
+How does Klaviyo improve campaigns compared to Mailchimp?
+Campaigns in Klaviyo are backed by better segmentation. Instead of broad lists, you can target very specific groups like “purchased in the last 30 days but not in the last 7” or “viewed a product twice but never purchased.”
+You can also use predictive analytics like expected next purchase date or lifetime value. This means your campaigns are more relevant, with higher engagement and conversion rates compared to broad Mailchimp blasts.
+How does Klaviyo improve automated flows compared to Mailchimp?
+Mailchimp has basic automation, but it’s often limited to date-based or signup triggers. Klaviyo allows you to build multi-step flows triggered by real-time events, such as abandoned cart, browse abandonment, post-purchase, replenishment, or winback flows. You can also use conditional splits and A/B testing inside flows, giving you much more control and flexibility than Mailchimp offers.
+ What are the billing differences between Mailchimp and Klaviyo?
+Mailchimp bills primarily by the size of your contact list, while Klaviyo bills based on the number of active, marketable profiles (people you can actually email or text). Suppressed contacts do not count towards your billing in Klaviyo. This means you’re often paying less over time, particularly if you have a large database with many inactive subscribers.
+ What are the overall benefits of moving to Klaviyo from Mailchimp?
+By consolidating into Klaviyo, you bring together email, SMS, signup forms, onsite tracking, and advanced segmentation in one place. You reduce costs, avoid the limitations of Mailchimp’s automation, and gain access to much deeper personalisation. The result is stronger campaigns, smarter flows, and a more efficient marketing setup that supports long-term growth.
