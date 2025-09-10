@@ -3,6 +3,8 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 import google.generativeai as genai
 import os
 import requests
+from flask import Flask
+import threading
 
 # --- Slack Setup ---
 app = App(token=os.environ["SLACK_BOT_TOKEN"])
@@ -18,7 +20,6 @@ BRANCH = "main"
 FOLDER = "docs"
 
 def load_docs_from_github(owner, repo, branch, folder):
-    """Load all .txt files from a GitHub repo folder."""
     url = f"https://api.github.com/repos/{owner}/{repo}/contents/{folder}?ref={branch}"
     resp = requests.get(url)
     resp.raise_for_status()
@@ -31,10 +32,7 @@ def load_docs_from_github(owner, repo, branch, folder):
             docs[file["name"]] = text
     return docs
 
-# Load docs at startup
 docs = load_docs_from_github(OWNER, REPO, BRANCH, FOLDER)
-
-# Load personality if available
 personality = docs.get("personality.txt", """
 Tone: Neutral and helpful.
 Keep answers concise.
@@ -42,7 +40,6 @@ Do not use jokes unless asked.
 """)
 
 def extract_subject(query: str) -> str:
-    """Ask Gemini to summarise the main subject of a query in 1-3 words."""
     subject_prompt = f"""
     Extract the main subject of this question in 1-3 words only.
 
@@ -52,7 +49,6 @@ def extract_subject(query: str) -> str:
     return resp.text.strip()
 
 def ask(query):
-    # Step 1: Select relevant files
     file_list = "\n".join([f"- {name}" for name in docs.keys() if name != "personality.txt"])
     selector_prompt = f"""
     We have multiple subject documents:
@@ -76,9 +72,8 @@ def ask(query):
         subject = extract_subject(query)
         return f"I can't find anything about {subject}. Try asking @tech"
 
-    # Step 2: Collect context from selected files
     combined_context = ""
-    max_chars = 12000  # keep request size safe
+    max_chars = 12000
     for fname in chosen_files:
         chunk = docs[fname]
         if len(combined_context) + len(chunk) > max_chars:
@@ -87,7 +82,6 @@ def ask(query):
         if len(combined_context) >= max_chars:
             break
 
-    # Step 3: Build final prompt
     final_prompt = f"""
     Personality guidelines:
     {personality}
@@ -112,5 +106,19 @@ def handle_mention(body, say):
     answer = ask(text)
     say(f"<@{user}> {answer}")
 
+# --- Flask Keepalive Server ---
+flask_app = Flask(__name__)
+
+@flask_app.route("/")
+def index():
+    return "Bot is running!"
+
+def run_flask():
+    port = int(os.environ.get("PORT", 5000))  # Render sets PORT env
+    flask_app.run(host="0.0.0.0", port=port)
+
 if __name__ == "__main__":
+    # Run Flask server in a background thread
+    threading.Thread(target=run_flask, daemon=True).start()
+    # Run Slack bot (blocking)
     SocketModeHandler(app, os.environ["SLACK_APP_TOKEN"]).start()
