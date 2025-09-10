@@ -1,0 +1,91 @@
+Recharge
+
+What is Recharge, and why should I connect it to Klaviyo?
+Recharge is a subscription billing platform for Shopify and other eCommerce stores. By integrating Recharge with Klaviyo, you can sync subscription data (e.g., active subscribers, skipped orders, cancellations, churn risk) directly into Klaviyo. This allows you to segment subscribers and automate email/SMS flows around subscription behavior instead of only one-off purchases.
+How does the Recharge integration with Klaviyo work?
+Recharge sends real-time customer subscription data into Klaviyo via the integration.
+
+It pushes events (e.g., “Subscription Created,” “Upcoming Order,” “Subscription Cancelled”) and profile properties (e.g., next charge date, subscription status).
+
+Klaviyo then uses this data to trigger flows, build segments, and personalize campaigns.
+
+What client problems does this integration solve?
+Lack of visibility into subscriber lifecycle inside Klaviyo.
+
+No way to distinguish subscribers from one-time purchasers in email/SMS campaigns.
+
+Missed opportunities for retention and churn-prevention automation.
+
+Manual reminders for subscription renewals, payment issues, or order updates.
+
+What data points from Recharge can Klaviyo use?
+Typical events & properties include:
+Events: Subscription Created, Subscription Cancelled, Subscription Re-activated, Upcoming Order, Order Skipped, Payment Failed.
+
+Properties: Subscription status (active, cancelled, expired), Next order date, Product subscribed to, Subscription frequency (e.g., every 30 days), Lifetime subscription value.
+
+What Klaviyo flows are most useful with Recharge data?
+Here are high-impact flows you can set up:
+Subscription Welcome Flow
+
+Triggered when a subscription is created.
+Educates on benefits, how to manage their subscription, and sets retention expectations.
+
+Upcoming Order Reminder
+
+
+Triggered X days before the next charge date.
+Lets customers skip, swap, or update payment.
+Reduces involuntary churn from failed payments.
+
+Failed Payment Flow
+
+Triggered by a failed payment event.
+Provides a link to update billing before the order cancels.
+
+Subscription Cancellation Flow
+
+Triggered when a customer cancels.
+Offers alternatives (skip, pause, downgrade) or a retention discount.
+
+Win-back Flow for Churned Subscribers
+
+Triggered 30–60 days after cancellation.
+Encourages reactivation with incentives or highlighting new products.
+
+Milestone / Loyalty Flow
+
+Celebrate subscription anniversaries or certain number of orders.
+Reinforces value and builds loyalty.
+
+Upsell / Cross-sell Flow
+
+For active subscribers, suggest complementary products.
+Encourage upgrades to higher-value plans.
+
+How can clients deploy this integration effectively?
+Technical Setup: Enable the Recharge integration in Klaviyo’s Integrations tab and map events correctly.
+
+Segmentation: Create segments such as “Active Subscribers,” “Churn Risk (Skipped 2+ orders),” or “Cancelled in last 30 days.”
+
+Flow Prioritization: Start with core retention flows (failed payment, cancellation, win-back) before adding more advanced ones.
+
+Content Strategy: Use customer education, trust-building, and flexibility messaging (skip/pause/swap vs. cancel).
+
+Testing & Optimization: A/B test incentives (discount vs. bonus product) for churn prevention.
+
+What types of brands benefit most from Recharge + Klaviyo?
+Consumables: coffee, supplements, beauty, pet products, etc.
+Refills: household goods, skincare, fragrance samples.
+Membership models: digital/physical boxes, clubs, loyalty-driven services.
+
+Can I target subscribers separately from non-subscribers in campaigns?
+Yes. Recharge sends subscription status into Klaviyo as a profile property, so you can segment campaigns (e.g., send new product launches to one-time buyers differently than subscribers).
+
+What’s the ROI of deploying Klaviyo + Recharge?
+Brands often see:
+Lower churn (by intercepting cancellations & payment failures).
+
+Higher LTV (through upsell flows & loyalty messaging).
+
+Better campaign targeting (so subscribers don’t get irrelevant one-off purchase emails). 
