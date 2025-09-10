@@ -1,0 +1,26 @@
+Relo
+
+What is Relo and why should I use it in Klaviyo?
+ Relo is a tool that tracks and syncs key subscription and customer lifecycle events directly into Klaviyo. This allows you to tailor your campaigns, flows, and segmentation to reflect real-time customer behaviour, such as subscription renewals, upgrades, or cancellations, without the need for manual data exports.
+How does Relo integrate with Klaviyo?
+Relo connects to Klaviyo through an API. Once connected, it automatically synchronises subscription events as either events or profile properties. These can then be used in your segments, flows, or triggered campaigns to create highly personalised marketing communications.
+Which Relo events are most useful for email marketing?
+Some of the most valuable events for email marketers include subscription creation, which can trigger welcome or onboarding flows; subscription pauses or resumptions, which are ideal for churn-prevention or re-engagement campaigns; subscription cancellations, which can be used to trigger exit surveys or win-back emails; and renewal or payment events, which support upsell, cross-sell, or renewal reminder campaigns.
+How do I use Relo data in Klaviyo segments?
+You can segment your audience based on event occurrence, such as customers who cancelled in the last 30 days, or based on profile properties synced from Relo, such as subscription type, next billing date, or subscription tier. This allows you to deliver highly targeted campaigns that respond directly to customer behaviour.
+Can I trigger flows based on Relo events?
+Yes. Any event that Relo sends to Klaviyo can trigger a flow. For example, a subscription pause event could trigger a flow designed to prevent churn, while a renewal payment could trigger an upsell flow. This makes your email marketing more responsive and timely.
+Subscription Created – Trigger welcome or onboarding flows.
+Subscription Paused/Resumed – Target churn-prevention or re-engagement campaigns.
+Subscription Cancelled – Launch exit surveys or win-back flows.
+Renewal or Payment Events – Send upsell, cross-sell, or renewal reminder emails.
+How often does Relo sync data to Klaviyo?
+Data synchronisation happens in near real-time, so your segments and flows are always up to date. This ensures that campaigns are triggered immediately after important subscription events, maintaining relevance for your audience.
+How can I avoid sending duplicate emails?
+To prevent duplicates, use Relo events together with Klaviyo’s flow filters and segment conditions. For example, you can exclude anyone who has already received a similar event-based email within a defined period. This keeps communications precise and avoids overloading subscribers.
+Can I see subscription revenue in Klaviyo using Relo?
+Yes. Relo can send subscription revenue data as events that Klaviyo can track. This allows you to measure the performance of your subscription campaigns, run A/B tests, and analyse ROI with greater accuracy.
+Does Relo work with both one-off and recurring purchases?
+Relo is primarily designed for recurring subscription data, but it can complement one-off purchase data managed through Klaviyo’s standard e-commerce integrations. This ensures a complete view of customer behaviour.
+How do I troubleshoot missing Relo events in Klaviyo?
+Check the API connection status in Relo, verify that event mapping settings are configured correctly, and ensure that flow triggers or segment conditions are not preventing the event from being recognised. Often the data is present, but filters or conditions may prevent it from appearing as expected.
