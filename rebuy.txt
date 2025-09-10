@@ -1,0 +1,57 @@
+Rebuy
+
+What is Rebuy, and why should I connect it to Klaviyo?
+ Rebuy is a personalisation and upsell platform for Shopify stores. It uses intelligent product recommendations, smart basket features, and post-purchase offers to increase average order value (AOV) and customer lifetime value (LTV).
+By connecting Rebuy to Klaviyo, you can bring the same personalised recommendation logic into your email and SMS campaigns. This ensures that customers receive consistent, tailored product suggestions both on site and off site.
+How does the integration between Rebuy and Klaviyo work?
+Rebuy shares data from its smart basket, checkout, and post-purchase offers with Klaviyo.
+Rebuy’s recommendation widgets can be inserted into Klaviyo emails, so each message contains dynamic product suggestions.
+Customer behaviour with Rebuy (such as adding recommended items to their basket) can be used in Klaviyo for segmentation and automated flows.
+The integration ensures a seamless customer experience across the website and email.
+What problems does this integration solve for brands?
+Email campaigns that previously relied on static or generic product suggestions can now be fully personalised.
+Rebuy’s onsite upsell and cross-sell opportunities are extended into Klaviyo flows.
+Brands no longer need to manage separate personalisation strategies for web and email.
+Post-purchase communications can now be tailored with relevant add-ons or complementary products.
+
+What can this integration achieve in practice?
+Provide consistent personalisation across all customer touchpoints.
+Increase AOV by inserting upsell and cross-sell blocks into Klaviyo flows.
+Drive reorders through predictive replenishment suggestions.
+Tailor offers to individual customers in post-purchase or win-back campaigns.
+Build better customer segments in Klaviyo using Rebuy activity.
+
+What data from Rebuy is available in Klaviyo?
+Customer browsing and recommendation activity.
+Products most frequently bought or recommended.
+Basket and checkout behaviour.
+AI-driven “next best product” logic.
+Segments built in Rebuy, such as frequent buyers of certain categories.
+
+Which Klaviyo flows benefit most from Rebuy data?
+Browse abandonment: show products the customer viewed alongside personalised recommendations.
+Basket abandonment: include alternatives or complementary products instead of just the items left behind.
+Post-purchase: highlight complementary products that make sense with what was just bought.
+Replenishment: predict when a product will run out and suggest a reorder.
+Win-back: re-engage lapsed customers with products similar to their past favourites or trending items.
+Loyalty / VIP: offer high-value customers exclusive, tailored product suggestions.
+
+How should brands deploy this integration?
+Connect Rebuy and Klaviyo via API.
+Insert Rebuy’s dynamic recommendation blocks into key Klaviyo email templates.
+Build Klaviyo segments from Rebuy data, such as customers who engaged with an upsell but did not purchase.
+Test static recommendations against Rebuy-driven recommendations to measure uplift.
+Ensure consistency between on-site recommendations and those shown in email to build trust.
+
+Which types of brands benefit most?
+Brands selling consumables and replenishment goods such as coffee, supplements or pet food.
+Businesses with large catalogues, such as apparel, beauty or skincare, where smart recommendations reduce overwhelm.
+Lifestyle brands with strong cross-sell opportunities, such as fragrance with candles, or skincare with tools.
+Can Rebuy recommendations be placed directly in Klaviyo emails?
+ Yes. Rebuy provides dynamic blocks that can be dropped into Klaviyo email templates. These blocks pull in live product recommendations when the email is opened, ensuring the content is always relevant.
+What is the return on investment from using Rebuy with Klaviyo?
+ Brands typically see:
+Higher AOV from upselling and cross-selling.
+Higher conversion rates in abandonment and post-purchase flows.
+Better customer retention through personalised reorder and win-back flows.
+Stronger performance from email, as content matches what customers see on site.
