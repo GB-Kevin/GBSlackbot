@@ -5,6 +5,11 @@ import os
 import requests
 from flask import Flask
 import threading
+import logging
+
+# --- Logging Setup ---
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # --- Slack Setup ---
 app = App(token=os.environ["SLACK_BOT_TOKEN"])
@@ -30,6 +35,7 @@ def load_docs_from_github(owner, repo, branch, folder):
             raw_url = file["download_url"]
             text = requests.get(raw_url).text
             docs[file["name"]] = text
+    logger.info(f"Loaded {len(docs)} .txt files from GitHub")
     return docs
 
 docs = load_docs_from_github(OWNER, REPO, BRANCH, FOLDER)
@@ -62,6 +68,7 @@ def ask(query):
     """
     sel = model.generate_content(selector_prompt)
     chosen_text = sel.text.strip().lower()
+    logger.info(f"File selection response: {chosen_text}")
 
     if "none" in chosen_text or not chosen_text:
         subject = extract_subject(query)
@@ -96,14 +103,17 @@ def ask(query):
     "I can't find anything about {extract_subject(query)}. Try asking @tech"
     """
     resp = model.generate_content(final_prompt)
+    logger.info(f"Gemini response generated for query: {query}")
     return resp.text.strip()
 
 # --- Slack Event Handling ---
 @app.event("app_mention")
-def handle_mention(body, say):
+def handle_mention(body, say, logger):
     user = body["event"]["user"]
     text = body["event"]["text"]
+    logger.info(f"Received mention from user {user}: {text}")
     answer = ask(text)
+    logger.info(f"Replying with: {answer[:200]}...")  # only log first 200 chars
     say(f"<@{user}> {answer}")
 
 # --- Flask Keepalive Server ---
@@ -114,11 +124,11 @@ def index():
     return "Bot is running!"
 
 def run_flask():
-    port = int(os.environ.get("PORT", 5000))  # Render sets PORT env
+    port = int(os.environ.get("PORT", 5000))
     flask_app.run(host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
-    # Run Flask server in a background thread
+    logger.info("Starting Flask keepalive thread...")
     threading.Thread(target=run_flask, daemon=True).start()
-    # Run Slack bot (blocking)
+    logger.info("Starting Slack SocketModeHandler...")
     SocketModeHandler(app, os.environ["SLACK_APP_TOKEN"]).start()
