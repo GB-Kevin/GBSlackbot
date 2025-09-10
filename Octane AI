@@ -1,26 +1,35 @@
-Relo
+Octane Ai
 
-What is Relo and why should I use it in Klaviyo?
- Relo is a tool that tracks and syncs key subscription and customer lifecycle events directly into Klaviyo. This allows you to tailor your campaigns, flows, and segmentation to reflect real-time customer behaviour, such as subscription renewals, upgrades, or cancellations, without the need for manual data exports.
-How does Relo integrate with Klaviyo?
-Relo connects to Klaviyo through an API. Once connected, it automatically synchronises subscription events as either events or profile properties. These can then be used in your segments, flows, or triggered campaigns to create highly personalised marketing communications.
-Which Relo events are most useful for email marketing?
-Some of the most valuable events for email marketers include subscription creation, which can trigger welcome or onboarding flows; subscription pauses or resumptions, which are ideal for churn-prevention or re-engagement campaigns; subscription cancellations, which can be used to trigger exit surveys or win-back emails; and renewal or payment events, which support upsell, cross-sell, or renewal reminder campaigns.
-How do I use Relo data in Klaviyo segments?
-You can segment your audience based on event occurrence, such as customers who cancelled in the last 30 days, or based on profile properties synced from Relo, such as subscription type, next billing date, or subscription tier. This allows you to deliver highly targeted campaigns that respond directly to customer behaviour.
-Can I trigger flows based on Relo events?
-Yes. Any event that Relo sends to Klaviyo can trigger a flow. For example, a subscription pause event could trigger a flow designed to prevent churn, while a renewal payment could trigger an upsell flow. This makes your email marketing more responsive and timely.
-Subscription Created – Trigger welcome or onboarding flows.
-Subscription Paused/Resumed – Target churn-prevention or re-engagement campaigns.
-Subscription Cancelled – Launch exit surveys or win-back flows.
-Renewal or Payment Events – Send upsell, cross-sell, or renewal reminder emails.
-How often does Relo sync data to Klaviyo?
-Data synchronisation happens in near real-time, so your segments and flows are always up to date. This ensures that campaigns are triggered immediately after important subscription events, maintaining relevance for your audience.
-How can I avoid sending duplicate emails?
-To prevent duplicates, use Relo events together with Klaviyo’s flow filters and segment conditions. For example, you can exclude anyone who has already received a similar event-based email within a defined period. This keeps communications precise and avoids overloading subscribers.
-Can I see subscription revenue in Klaviyo using Relo?
-Yes. Relo can send subscription revenue data as events that Klaviyo can track. This allows you to measure the performance of your subscription campaigns, run A/B tests, and analyse ROI with greater accuracy.
-Does Relo work with both one-off and recurring purchases?
-Relo is primarily designed for recurring subscription data, but it can complement one-off purchase data managed through Klaviyo’s standard e-commerce integrations. This ensures a complete view of customer behaviour.
-How do I troubleshoot missing Relo events in Klaviyo?
-Check the API connection status in Relo, verify that event mapping settings are configured correctly, and ensure that flow triggers or segment conditions are not preventing the event from being recognised. Often the data is present, but filters or conditions may prevent it from appearing as expected.
+What is Octane AI, and why should I connect it to Klaviyo?
+Octane AI is a quiz and zero-party data collection platform for eCommerce. It allows brands to create engaging product recommendation quizzes, collect customer preferences, and enrich profiles with information that customers willingly provide. 
+When connected to Klaviyo, this data flows directly into customer profiles and can be used to drive segmentation, personalisation and automated flows. The result is far more relevant email and SMS marketing.
+How does the integration between Octane AI and Klaviyo work?
+When a customer completes an Octane AI quiz, their answers are recorded as properties on their Klaviyo profile. These properties might include skin type, fragrance preference, dietary goals, or style choices, depending on the brand’s sector. Klaviyo can then use this information to trigger automated flows, personalise content blocks, or build precise customer segments for campaigns.
+What problems does this integration solve for brands?
+Many brands struggle with delivering genuine personalisation, often relying only on purchase history or demographic data. Octane AI solves this by gathering zero-party data – insights customers willingly share – and passing it into Klaviyo. 
+This enables brands to send recommendations that are aligned with customer preferences, reduce the risk of irrelevant messaging, and replace broad “batch and blast” campaigns with more tailored communications.
+What can this integration achieve in practice?
+ By combining Octane AI and Klaviyo, brands can build highly targeted customer journeys that reflect each shopper’s individual needs and preferences. The integration makes it possible to recommend the right products to the right people, improve conversion rates, and strengthen customer loyalty. 
+It also gives brands a reliable way to capture first-party and zero-party data, which is increasingly important as third-party cookies and traditional tracking methods lose effectiveness.
+What data from Octane AI is available in Klaviyo?
+ When a customer completes a quiz, Klaviyo receives a record of the event itself along with all the answers given to each question. These might cover practical needs such as skin type or dietary restrictions, or preference-led choices like fragrance style or colour palette. 
+Klaviyo can also capture the final product recommendations from the quiz, providing a direct link between stated customer needs and suggested solutions.
+Which Klaviyo flows benefit most from Octane AI data?
+The most immediate application is within the welcome flow. Instead of sending every new subscriber the same sequence of emails, brands can tailor the journey depending on quiz answers, highlighting the most relevant product ranges and advice. Abandonment flows – whether browse or basket – can also be improved by including recommendations that align with the customer’s stated preferences. 
+Post-purchase flows are another key area, where complementary products can be suggested based on quiz results. Replenishment reminders can be timed according to usage habits shared in the quiz, while win-back campaigns can focus on reintroducing customers to products that match their profile.
+How should brands deploy this integration?
+To make the most of the integration, start by designing an engaging and brand-relevant quiz in Octane AI. Once connected to Klaviyo, ensure that each answer is mapped to the correct profile property. From there, flows can be adapted to include splits and filters that reflect quiz results, while dynamic content blocks in campaigns ensure each customer sees the most appropriate products. 
+
+Over time, quiz data should be reviewed to refine customer segments and reveal new trends that can inform product development and wider marketing activity.
+
+Which types of brands benefit most?
+This integration is particularly effective for skincare, cosmetics and haircare brands, where customers often need tailored recommendations based on routine or skin type. It also works well for fragrance, wellness and lifestyle businesses that rely heavily on preference-driven buying.
+ Food and drink brands can use quizzes to capture dietary needs or flavour preferences, while fashion and apparel companies can use style and fit information to guide purchases. 
+In short, any business with a large catalogue or where choice can feel overwhelming will benefit significantly from Octane AI.
+Can I use quiz data for segmentation and targeting in Klaviyo campaigns?
+Yes. Because quiz answers are saved as profile properties, they can be used to build precise segments such as “customers who prefer floral fragrances,” “customers with dry skin,” or “customers who want vegan products.” Campaigns can then be tailored to each segment, ensuring relevance and improving engagement.
+What is the return on investment from using Octane AI with Klaviyo?
+The integration typically leads to higher conversion rates by ensuring that every recommendation is personal and relevant. It can increase average order value through upselling and cross-selling tailored to individual customers. 
+It also reduces unsubscribe rates, as customers receive content that resonates with them. Perhaps most importantly, it builds trust, since the data used for targeting is voluntarily provided by customers themselves.
+
+
