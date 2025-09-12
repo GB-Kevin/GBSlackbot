@@ -2,10 +2,12 @@ from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 import google.generativeai as genai
 import os
+import re
 import requests
 from flask import Flask
 import threading
 import logging
+import random
 from typing import Dict, Optional
 
 # --- Logging Setup ---
@@ -14,10 +16,27 @@ logger = logging.getLogger(__name__)
 
 # --- Config for "long response" UX ---
 # If the bot hasn't finished responding within these delays, it will:
-#  - send an ephemeral "Working on it…" to the user
-#  - post a public "thinking…" placeholder in a thread
-EPHEMERAL_DELAY_SEC = 0.5
+#  - send an ephemeral "Working on it…" to the user (randomized message)
+#  - post a public "thinking…" placeholder (IN A THREAD)
+EPHEMERAL_DELAY_SEC = 5.0
 PLACEHOLDER_DELAY_SEC = 1.0
+
+EPHEMERAL_MESSAGES = [
+    "I’m just thinking through your question—bear with me.",
+    "Working on this now—one moment.",
+    "Give me a sec while I check the docs.",
+    "On it—collecting the right info.",
+    "Let me pull the relevant bits together.",
+    "One moment, I’m piecing this answer together.",
+    "I’m scanning the docs for the best answer—hang tight.",
+    "Almost there—just making sure I’ve got it right.",
+    # Friendly digs at Tech (light and kind):
+    "Tech gave me *so* much knowledge that I need a second to sift through it 😅",
+    "Blame Tech for stuffing my brain with docs—I’ll have your answer in a moment!",
+]
+
+def pick_ephemeral_message() -> str:
+    return random.choice(EPHEMERAL_MESSAGES)
 
 # --- Slack Setup ---
 app = App(token=os.environ["SLACK_BOT_TOKEN"])
@@ -53,6 +72,29 @@ Keep answers concise.
 Do not use jokes unless asked.
 """)
 
+# --- Smalltalk / social intent fast-path ---
+def smalltalk_reply(user_text: str) -> str:
+    """
+    Returns a short friendly message if the text looks like greetings/thanks/help/etc.
+    Empty string if no match (i.e., not smalltalk).
+    """
+    t = (user_text or "").lower()
+
+    if re.search(r"\b(hi|hello|hey|yo|hola|howdy)\b", t):
+        return "Hi! I can help with questions about our docs. What do you need?"
+
+    if re.search(r"\b(thanks|thank you|cheers|appreciate)\b", t):
+        return "You’re welcome! Glad it helped."
+
+    if re.search(r"\b(help|what can you do|how do i use you|who are you)\b", t):
+        return "I answer questions using our internal docs—try asking about a process or policy."
+
+    if re.search(r"\b(status|ping|are you up)\b", t):
+        return "Online and ready. If I’m slow, I’m fetching or summarising docs."
+
+    # Add other lightweight social handlers here if needed.
+    return ""
+
 def extract_subject(query: str) -> str:
     subject_prompt = f"""
     Extract the main subject of this question in 1-3 words only.
@@ -63,6 +105,7 @@ def extract_subject(query: str) -> str:
     return (resp.text or "").strip() or "that topic"
 
 def ask(query):
+    # --- Selector prompt nudged to include greetings file when appropriate ---
     file_list = "\n".join([f"- {name}" for name in docs.keys() if name != "personality.txt"])
     selector_prompt = f"""
     We have multiple subject documents:
@@ -71,7 +114,11 @@ def ask(query):
 
     Question: {query}
 
-    Which file(s) are most relevant? 
+    Rules:
+    - If the message is a greeting, thanks, 'help', 'what can you do', 'who are you', or general smalltalk,
+      select "greetings_and_smalltalk.txt".
+    - Otherwise, pick the most relevant doc(s) from the list.
+
     Reply with a comma-separated list of filenames, or "none" if nothing is relevant.
     """
     sel = model.generate_content(selector_prompt)
@@ -114,41 +161,49 @@ def ask(query):
     logger.info(f"Gemini response generated for query: {query}")
     return (resp.text or "").strip()
 
-# --- Slack Event Handling with "long-running" UX ---
+# --- Slack Event Handling with smalltalk routing + "long-running" UX ---
 @app.event("app_mention")
 def handle_mention(body, say, client, logger):
     evt: Dict = body.get("event", {})
     user: Optional[str] = evt.get("user")
     text: str = evt.get("text", "") or ""
     channel: Optional[str] = evt.get("channel")
-    thread_ts: Optional[str] = evt.get("ts")  # reply in a thread to keep the channel tidy
+    thread_ts_mention: Optional[str] = evt.get("ts")  # ts of the trigger message
 
     logger.info(f"Received mention from user {user} in {channel}: {text!r}")
 
-    # Shared state for timers
+    # 1) Smalltalk fast-path: POST IN CHANNEL (not in a thread)
+    st = smalltalk_reply(text)
+    if st and channel and user:
+        try:
+            say(channel=channel, text=f"<@{user}> {st}")
+            logger.info("Smalltalk reply sent in-channel.")
+        except Exception:
+            logger.exception("Failed to send smalltalk reply.")
+        return  # do not proceed with long-running flow
+
+    # 2) Non-smalltalk: do the long-running flow with ephemeral + placeholder IN A THREAD
     done = {"flag": False}
     placeholder = {"ts": None}
 
-    # Timer: send ephemeral "working on it…" (only if still not done)
     def send_ephemeral():
         if not done["flag"] and channel and user:
             try:
                 client.chat_postEphemeral(
                     channel=channel,
                     user=user,
-                    text="⏳ Working on it…"
+                    text=pick_ephemeral_message()
                 )
                 logger.info("Sent ephemeral 'working on it…'")
             except Exception as e:
                 logger.warning(f"Failed to send ephemeral: {e}")
 
-    # Timer: post public placeholder "thinking…" (threaded)
     def send_placeholder():
         if not done["flag"] and channel and user:
             try:
                 res = say(
                     channel=channel,
-                    thread_ts=thread_ts,
+                    thread_ts=thread_ts_mention,
                     text=f"🤖 <@{user}> thinking…"
                 )
                 placeholder["ts"] = res["ts"]
@@ -160,7 +215,6 @@ def handle_mention(body, say, client, logger):
     threading.Timer(EPHEMERAL_DELAY_SEC, send_ephemeral).start()
     threading.Timer(PLACEHOLDER_DELAY_SEC, send_placeholder).start()
 
-    # Do the actual work
     try:
         answer = ask(text)
         final_text = f"<@{user}> {answer}"
@@ -168,23 +222,20 @@ def handle_mention(body, say, client, logger):
         logger.exception("Error while generating answer")
         final_text = f"😬 <@{user}> I hit an error processing that."
 
-    # Mark as done so timers (if not fired yet) won't send progress messages
     done["flag"] = True
 
-    # If a placeholder exists, update it. Otherwise, just post the final message.
     try:
         if placeholder["ts"]:
             client.chat_update(channel=channel, ts=placeholder["ts"], text=final_text)
             logger.info("Updated placeholder with final answer.")
         else:
-            # Post final message in the same thread as the mention
-            say(channel=channel, thread_ts=thread_ts, text=final_text)
+            # Post final answer IN THREAD to keep channel tidy
+            say(channel=channel, thread_ts=thread_ts_mention, text=final_text)
             logger.info("Posted final answer without placeholder.")
     except Exception as e:
         logger.warning(f"Failed to deliver final message/update: {e}")
-        # Last attempt: try a plain post
         try:
-            say(channel=channel, thread_ts=thread_ts, text=final_text)
+            say(channel=channel, thread_ts=thread_ts_mention, text=final_text)
         except Exception:
             logger.exception("Final fallback post failed.")
 
@@ -197,7 +248,6 @@ def index():
 
 def run_flask():
     port = int(os.environ.get("PORT", 5000))
-    # host=0.0.0.0 to bind externally on Render Web Services
     flask_app.run(host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
