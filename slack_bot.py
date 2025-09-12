@@ -6,10 +6,18 @@ import requests
 from flask import Flask
 import threading
 import logging
+from typing import Dict, Optional
 
 # --- Logging Setup ---
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# --- Config for "long response" UX ---
+# If the bot hasn't finished responding within these delays, it will:
+#  - send an ephemeral "Working on it…" to the user
+#  - post a public "thinking…" placeholder in a thread
+EPHEMERAL_DELAY_SEC = 0.5
+PLACEHOLDER_DELAY_SEC = 1.0
 
 # --- Slack Setup ---
 app = App(token=os.environ["SLACK_BOT_TOKEN"])
@@ -52,7 +60,7 @@ def extract_subject(query: str) -> str:
     Question: {query}
     """
     resp = model.generate_content(subject_prompt)
-    return resp.text.strip()
+    return (resp.text or "").strip() or "that topic"
 
 def ask(query):
     file_list = "\n".join([f"- {name}" for name in docs.keys() if name != "personality.txt"])
@@ -67,7 +75,7 @@ def ask(query):
     Reply with a comma-separated list of filenames, or "none" if nothing is relevant.
     """
     sel = model.generate_content(selector_prompt)
-    chosen_text = sel.text.strip().lower()
+    chosen_text = (sel.text or "").strip().lower()
     logger.info(f"File selection response: {chosen_text}")
 
     if "none" in chosen_text or not chosen_text:
@@ -104,19 +112,83 @@ def ask(query):
     """
     resp = model.generate_content(final_prompt)
     logger.info(f"Gemini response generated for query: {query}")
-    return resp.text.strip()
+    return (resp.text or "").strip()
 
-# --- Slack Event Handling ---
+# --- Slack Event Handling with "long-running" UX ---
 @app.event("app_mention")
-def handle_mention(body, say, logger):
-    user = body["event"]["user"]
-    text = body["event"]["text"]
-    logger.info(f"Received mention from user {user}: {text}")
-    answer = ask(text)
-    logger.info(f"Replying with: {answer[:200]}...")  # only log first 200 chars
-    say(f"<@{user}> {answer}")
+def handle_mention(body, say, client, logger):
+    evt: Dict = body.get("event", {})
+    user: Optional[str] = evt.get("user")
+    text: str = evt.get("text", "") or ""
+    channel: Optional[str] = evt.get("channel")
+    thread_ts: Optional[str] = evt.get("ts")  # reply in a thread to keep the channel tidy
 
-# --- Flask Keepalive Server ---
+    logger.info(f"Received mention from user {user} in {channel}: {text!r}")
+
+    # Shared state for timers
+    done = {"flag": False}
+    placeholder = {"ts": None}
+
+    # Timer: send ephemeral "working on it…" (only if still not done)
+    def send_ephemeral():
+        if not done["flag"] and channel and user:
+            try:
+                client.chat_postEphemeral(
+                    channel=channel,
+                    user=user,
+                    text="⏳ Working on it…"
+                )
+                logger.info("Sent ephemeral 'working on it…'")
+            except Exception as e:
+                logger.warning(f"Failed to send ephemeral: {e}")
+
+    # Timer: post public placeholder "thinking…" (threaded)
+    def send_placeholder():
+        if not done["flag"] and channel and user:
+            try:
+                res = say(
+                    channel=channel,
+                    thread_ts=thread_ts,
+                    text=f"🤖 <@{user}> thinking…"
+                )
+                placeholder["ts"] = res["ts"]
+                logger.info(f"Posted placeholder message ts={placeholder['ts']}")
+            except Exception as e:
+                logger.warning(f"Failed to post placeholder: {e}")
+
+    # Start timers; they will fire only if the work isn't done quickly
+    threading.Timer(EPHEMERAL_DELAY_SEC, send_ephemeral).start()
+    threading.Timer(PLACEHOLDER_DELAY_SEC, send_placeholder).start()
+
+    # Do the actual work
+    try:
+        answer = ask(text)
+        final_text = f"<@{user}> {answer}"
+    except Exception as e:
+        logger.exception("Error while generating answer")
+        final_text = f"😬 <@{user}> I hit an error processing that."
+
+    # Mark as done so timers (if not fired yet) won't send progress messages
+    done["flag"] = True
+
+    # If a placeholder exists, update it. Otherwise, just post the final message.
+    try:
+        if placeholder["ts"]:
+            client.chat_update(channel=channel, ts=placeholder["ts"], text=final_text)
+            logger.info("Updated placeholder with final answer.")
+        else:
+            # Post final message in the same thread as the mention
+            say(channel=channel, thread_ts=thread_ts, text=final_text)
+            logger.info("Posted final answer without placeholder.")
+    except Exception as e:
+        logger.warning(f"Failed to deliver final message/update: {e}")
+        # Last attempt: try a plain post
+        try:
+            say(channel=channel, thread_ts=thread_ts, text=final_text)
+        except Exception:
+            logger.exception("Final fallback post failed.")
+
+# --- Flask Keepalive Server (for status page) ---
 flask_app = Flask(__name__)
 
 @flask_app.route("/")
@@ -125,6 +197,7 @@ def index():
 
 def run_flask():
     port = int(os.environ.get("PORT", 5000))
+    # host=0.0.0.0 to bind externally on Render Web Services
     flask_app.run(host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
